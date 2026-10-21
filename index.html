@@ -221,11 +221,8 @@
   document.head.append(style);
 
   navs.forEach((nav) => {
-    const candidate = [...nav.querySelectorAll("a")].find((anchor) => anchor.getAttribute("href")?.replace(/\/$/, "") === "https://easyticket-explore-book.khairani0894.chatgpt.site/promo");
+    const candidate = [...nav.querySelectorAll("a")].find((anchor) => anchor.getAttribute("href")?.replace(/\/$/, "") === "https://easyticket-explore-book.khairani0894.chatgpt.site/explore");
     if (!candidate || candidate.closest(".dest-menu-wrap")) return;
-    candidate.href = "https://easyticket-explore-book.khairani0894.chatgpt.site/explore/";
-    candidate.textContent = "Destinasi";
-    candidate.classList.remove("current");
     const wrapper = document.createElement("span");
     wrapper.className = "dest-menu-wrap";
     candidate.parentNode.insertBefore(wrapper, candidate);
