@@ -71,7 +71,7 @@
   if(!root)return;
   const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const m=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
-  const safeImage=value=>{try{const url=new URL(value,location.origin);return url.protocol==='https:'||url.origin===location.origin?url.href:''}catch{return ''}};
+  const safeImage=value=>{try{const url=new URL(value,new URL(document.baseURI).origin);return url.protocol==='https:'||url.origin===new URL(document.baseURI).origin?url.href:''}catch{return ''}};
   const regionFor=city=>{
     const place=String(city||'').trim().toLowerCase();
     if(!place||/lokasi menyusul|belum ditentukan|menyusul/.test(place))return '';
@@ -161,7 +161,7 @@
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const safeImage = (value) => {
     if (typeof value !== "string" || !value.trim()) return "";
-    try { const url = new URL(value, location.origin); return url.protocol === "https:" || url.origin === location.origin ? url.href : ""; }
+    try { const url = new URL(value, new URL(document.baseURI).origin); return url.protocol === "https:" || url.origin === new URL(document.baseURI).origin ? url.href : ""; }
     catch { return ""; }
   };
   const money = (value) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(Number(value) || 0);
@@ -275,7 +275,7 @@
 (() => {
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>\"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[char]);
   const safeImage = (value) => {
-    try { const url = new URL(value, location.origin); return url.protocol === "https:" || url.origin === location.origin ? url.href : ""; }
+    try { const url = new URL(value, new URL(document.baseURI).origin); return url.protocol === "https:" || url.origin === new URL(document.baseURI).origin ? url.href : ""; }
     catch { return ""; }
   };
   const navs = [...document.querySelectorAll("nav.links")];
@@ -458,7 +458,7 @@
         filterExplore(query);
         document.querySelector('#destinationCards')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
-        const next = new URL('https://easyticket-explore-book.khairani0894.chatgpt.site/explore/', location.origin);
+        const next = new URL('https://easyticket-explore-book.khairani0894.chatgpt.site/explore/', new URL(document.baseURI).origin);
         if (query) next.searchParams.set('q', query);
         next.searchParams.set('date', chosenDate);
         location.assign(next.href);
@@ -482,7 +482,7 @@
       input.setAttribute('list', suggestions.id);
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        const next = new URL('https://easyticket-explore-book.khairani0894.chatgpt.site/explore/', location.origin);
+        const next = new URL('https://easyticket-explore-book.khairani0894.chatgpt.site/explore/', new URL(document.baseURI).origin);
         if (input.value.trim()) next.searchParams.set('q', input.value.trim());
         next.searchParams.set('date', date.value && date.value >= today ? date.value : today);
         location.assign(next.href);
@@ -498,7 +498,7 @@
       const link = event.target.closest('#destinationCards a[href*="https://easyticket-explore-book.khairani0894.chatgpt.site/destination/"], #experiences a[href*="https://easyticket-explore-book.khairani0894.chatgpt.site/destination/"]');
       if (!link) return;
       const chosenDate = document.querySelector('#search input[type="date"]')?.value || startDate;
-      const destinationUrl = new URL(link.href, location.origin);
+      const destinationUrl = new URL(link.href, new URL(document.baseURI).origin);
       destinationUrl.searchParams.set('date', chosenDate >= today ? chosenDate : today);
       link.href = destinationUrl.href;
     }, true);
@@ -537,7 +537,7 @@
   document.addEventListener("click", (event) => {
     const link = event.target.closest?.('a[href^="https://easyticket-explore-book.khairani0894.chatgpt.site/destination/"]');
     if (!link) return;
-    const slug = destinationFromPath(new URL(link.href, location.origin).pathname);
+    const slug = destinationFromPath(new URL(link.href, new URL(document.baseURI).origin).pathname);
     if (slug) track("destination_click", { destinationSlug: slug });
   });
 
