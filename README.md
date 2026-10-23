@@ -7,7 +7,7 @@ Portal EasyTicket untuk menjelajahi destinasi wisata, melihat informasi merchant
 - GitHub Pages: https://easyticket-hash.github.io/easyticket.id/
 - Website utama: https://easyticket-explore-book.khairani0894.chatgpt.site/
 
-GitHub Pages meneruskan pengunjung ke website utama agar halaman destinasi, merchant, checkout, dan fitur yang memakai layanan backend selalu menggunakan versi produksi terbaru. Pengarah GitHub Pages saat ini menggunakan rilis website versi 96, dengan ikon sosial footer yang sudah terhubung dan susunan tautan footer yang diperbarui.
+GitHub Pages meneruskan pengunjung ke website utama agar halaman destinasi, merchant, checkout, dan fitur yang memakai layanan backend selalu menggunakan versi produksi terbaru. Rilis website versi 97 merapikan footer, termasuk menghapus kolom EasyTicket yang kosong.
 
 ## Catatan
 
