@@ -7,7 +7,7 @@ Portal EasyTicket untuk menjelajahi destinasi wisata, melihat informasi merchant
 - GitHub Pages: https://easyticket-hash.github.io/easyticket.id/
 - Website utama: https://easyticket-explore-book.khairani0894.chatgpt.site/
 
-GitHub Pages meneruskan pengunjung ke website utama agar halaman destinasi, merchant, checkout, dan fitur yang memakai layanan backend selalu menggunakan versi produksi terbaru. Rilis website versi 101 memperbaiki posisi banner ajakan merchant di halaman Promo agar rata tengah dan sejajar dengan kartu promo.
+GitHub Pages meneruskan pengunjung ke website utama agar halaman destinasi, merchant, checkout, dan fitur yang memakai layanan backend selalu menggunakan versi produksi terbaru. Rilis website versi 102 menghapus banner Kiddoland dari halaman For Merchant dan menampilkan formulir pendaftaran merchant langsung di halaman yang sama.
 
 ## Catatan
 
