@@ -7,7 +7,7 @@ Portal EasyTicket untuk menjelajahi destinasi wisata, melihat informasi merchant
 - GitHub Pages: https://easyticket-hash.github.io/easyticket.id/
 - Website utama: https://easyticket-explore-book.khairani0894.chatgpt.site/
 
-GitHub Pages meneruskan pengunjung ke website utama agar halaman destinasi, merchant, checkout, dan fitur yang memakai layanan backend selalu menggunakan versi produksi terbaru. Rilis website versi 98 menata ulang badge promo hero agar tidak menutupi foto, menampilkan tiga promo di halaman Promo, dan menerapkan diskon Asia Heritage serta Museum Pasifika otomatis saat checkout.
+GitHub Pages meneruskan pengunjung ke website utama agar halaman destinasi, merchant, checkout, dan fitur yang memakai layanan backend selalu menggunakan versi produksi terbaru. Rilis website versi 99 menambahkan kolase foto wisata dan badge diskon pada hero halaman Promo, serta merapikan tampilan ikon sosial di footer agar tetap kecil dan sejajar.
 
 ## Catatan
 
