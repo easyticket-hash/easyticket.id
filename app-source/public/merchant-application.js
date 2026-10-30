@@ -1,0 +1,20 @@
+(()=>{
+ const $=id=>document.getElementById(id),form=$('correction');let auth=null,challengeId='',regions=[],busy=false;
+ try{auth=JSON.parse(localStorage.getItem('et_merchant_application')||'null')}catch{}
+ const notice=s=>$('notice').textContent=s;
+ async function json(url,body){const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}),b=await r.json();if(!r.ok)throw Error(b.error||'Permintaan gagal.');return b}
+ async function task(fn){if(busy)return;busy=true;document.querySelectorAll('button').forEach(b=>b.disabled=true);try{await fn()}catch(e){notice(e.message)}finally{busy=false;document.querySelectorAll('button').forEach(b=>b.disabled=false)}}
+ function cities(selected){const el=form.elements.city;el.replaceChildren();(regions.find(r=>r.name===form.elements.province.value)?.cities||[]).forEach(c=>el.add(new Option(c,c)));if(selected)el.value=selected}
+ form.elements.province.onchange=()=>cities();
+ async function load(){const {application:r}=await json('/api/merchants/application',auth);$('login').hidden=true;$('detail').hidden=false;$('business').textContent=r.business_name;$('status').textContent=r.status;$('emailStatus').textContent=`${r.email} · ${r.email_verified_at?'Email terverifikasi':'Email belum terverifikasi'}`;$('summary').textContent=`${r.contact_name} · ${r.whatsapp} · ${r.province||''}, ${r.city}`;
+ $('history').replaceChildren();if(!r.history.length)$('history').textContent='Pendaftaran menunggu review Admin.';r.history.forEach(h=>{const div=document.createElement('div');div.className='history';div.textContent=`${h.action}\n${h.note}\n${new Date(h.created_at).toLocaleString('id-ID',{timeZone:'Asia/Makassar'})} WITA`;$('history').append(div)});
+ form.hidden=r.status!=='Perlu perbaikan';$('passwordForm').hidden=r.status!=='Disetujui · Aktif';
+ if(!form.hidden){if(!regions.length)regions=await(await fetch('/merchant-regions.json')).json();form.elements.province.replaceChildren();regions.forEach(p=>form.elements.province.add(new Option(p.name,p.name)));form.elements.province.value=r.province;cities(r.city);for(const [k,v]of Object.entries({businessName:r.business_name,businessType:r.business_type,contactName:r.contact_name,whatsapp:r.whatsapp,description:r.description,referral:r.referral}))form.elements[k].value=v||'';$('documents').textContent='Dokumen saat ini: '+(r.documents.map(d=>d.name).join(', ')||'Belum ada');}
+ }
+ $('send').onclick=()=>task(async()=>{const b=await json('/api/merchants/email',{action:'send',email:$('email').value.trim().toLowerCase()});challengeId=b.challengeId;notice(b.message||'Kode terkirim. Periksa email bisnis.');});
+ $('verify').onclick=()=>task(async()=>{const b=await json('/api/merchants/email',{action:'confirm',email:$('email').value.trim().toLowerCase(),challengeId,code:$('code').value.trim()});const r=await json('/api/merchants/application',{action:'recover',challengeId,verificationToken:b.verificationToken});auth={id:r.id,accessToken:r.accessToken};localStorage.setItem('et_merchant_application',JSON.stringify(auth));await load();notice('Verifikasi berhasil.');});
+ form.onsubmit=e=>{e.preventDefault();task(async()=>{const fd=new FormData(form);fd.set('id',auth.id);fd.set('accessToken',auth.accessToken);fd.set('replaceDocuments',String(form.elements.replaceDocuments.checked));const r=await fetch('/api/merchants/application',{method:'PUT',body:fd}),b=await r.json();if(!r.ok)throw Error(b.error);form.reset();await load();notice('Perbaikan tersimpan dan dikirim ulang. Tunggu review Admin.');})};
+ $('passwordForm').onsubmit=e=>{e.preventDefault();task(async()=>{await json('/api/merchants/application',{...auth,action:'password',password:$('password').value});$('password').value='';notice('Kata sandi tersimpan. Silakan masuk ke portal merchant.');})};
+ $('logout').onclick=()=>{localStorage.removeItem('et_merchant_application');auth=null;$('detail').hidden=true;$('login').hidden=false;notice('Anda sudah keluar.');};
+ if(auth)task(load);
+})();

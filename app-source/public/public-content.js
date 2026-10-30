@@ -1,0 +1,1 @@
+(()=>{fetch('/api/site-content',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(({content=[]})=>{for(const item of content){const node=document.querySelector(`[data-et-content="${CSS.escape(item.key)}"]`);if(node&&item.body)node.textContent=item.body}}).catch(()=>{})})();
